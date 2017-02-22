@@ -96,8 +96,8 @@ type StreamResponse struct {
 
 // Regular expressions to match streams
 // Valid twitch.tv/username -links, as well as username.tv/live -links work
-var twitchLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?twitch\\.tv/([a-zA-Z0-9]+)[ $]")
-var liveLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?([a-zA-Z0-9]+)\\.tv/live")
+var twitchLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?twitch\\.tv/([a-zA-Z0-9]+)(?: |$)")
+var liveLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?([a-zA-Z0-9]+)\\.tv/live(?: |$)")
 
 // Session is declared in the global space so it can be easily used
 // throughout this program.

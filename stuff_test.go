@@ -19,6 +19,18 @@ func TestStuff(t *testing.T) {
 		"Come watch http://lietu.tv/live because I'm awesome",
 		"Come watch www.lietu.tv/live because I'm awesome",
 		"Come watch lietu.tv/live because I'm awesome",
+		"https://www.lietu.tv/live",
+		"https://lietu.tv/live",
+		"http://www.lietu.tv/live",
+		"http://lietu.tv/live",
+		"www.lietu.tv/live",
+		"lietu.tv/live",
+		"https://www.twitch.tv/lietu",
+		"https://twitch.tv/lietu",
+		"http://www.twitch.tv/lietu",
+		"http://twitch.tv/lietu",
+		"www.twitch.tv/lietu",
+		"twitch.tv/lietu",
 	}
 
 	for _, s := range strings {
