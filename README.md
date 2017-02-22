@@ -96,3 +96,34 @@ offline, the message should get deleted about 2 minutes later.
 The [discordgo](https://github.com/bwmarrin/disgord/blob/master/LICENSE) code
 is licensed under it's own license. This code is licensed under the MIT 
 license. Basically that means: go ahead, use it.
+
+## Setting up on a server
+
+### Supervisord
+
+Assuming you have the system working properly when you run it from shell and
+you want to have it permanently running on a server, you should consider using
+Supervisord. Installing it is easy on pretty much any *nix system, you can e.g. check Google
+for `installing supervisord <my os/distro name>`.
+
+Once you have it set up, you can use this `dsm.ini` as the basis of your
+configuration:
+
+```ini
+[program:dsm]
+command=bash run.sh
+autorestart=true
+user=dsm
+directory=/home/dsm/discord-stream-monitor
+environment=HOME="/home/dsm"
+```
+
+In that sample the following assumptions are made:
+
+ - You have a user called `dsm` configured, and you want to run the tool with it
+ - The program is installed in `/home/dsm/discord-stream-monitor`
+ - The `dsm` user's home directory is `/home/dsm`
+ - You have configured `run.sh` appropriately
+ 
+If these assumptions are incorrect for your use-case, change the configuration
+accordingly.
