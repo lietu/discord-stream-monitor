@@ -256,6 +256,8 @@ func monitor(messageID string, channelID string, streamer string) {
 				log.Printf("Got error when trying to delete message: %s", err)
 			}
 			return
+		} else {
+			log.Printf("Channel %s / %s is still live", streamer, twitchId)
 		}
 	}
 }
@@ -270,12 +272,13 @@ func handleMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	streamer := getStreamerAdvertised(m.Content)
+	log.Printf("Stream from %s mentioned", streamer)
 	if streamer != "" {
 		if !channelOk(m.ChannelID) {
 			return
 		}
 
-		log.Printf("Stream from %s mentioned", streamer)
+		log.Printf("Channel looks like we should monitor it, so will do that")
 
 		go monitor(m.ID, m.ChannelID, streamer)
 	}
