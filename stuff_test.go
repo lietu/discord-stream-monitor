@@ -19,6 +19,8 @@ func TestStuff(t *testing.T) {
 		"Come watch http://lietu.tv/live because I'm awesome",
 		"Come watch www.lietu.tv/live because I'm awesome",
 		"Come watch lietu.tv/live because I'm awesome",
+		"Come watch lietu.tv/live/ because I'm awesome",
+		"https://www.lietu.tv/live/",
 		"https://www.lietu.tv/live",
 		"https://lietu.tv/live",
 		"http://www.lietu.tv/live",
@@ -58,6 +60,20 @@ func TestStuff(t *testing.T) {
 
 		if stream != "" {
 			t.Errorf("False positive match %s: %s", stream, s)
+		} else {
+			log.Printf("%s -> %s: OK!", s, stream)
+		}
+	}
+
+	strings = []string{
+		"<Minin> blind playtrough of Fallout 2 https://www.twitch.tv/minin/",
+	}
+
+	for _, s := range strings {
+		stream := getStreamerAdvertised(s)
+
+		if stream != "minin" {
+			t.Errorf("Did not match expected streamer: %s", s)
 		} else {
 			log.Printf("%s -> %s: OK!", s, stream)
 		}

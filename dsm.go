@@ -19,6 +19,11 @@ var MonitorChannels = []string{
 	"283689700802166785",
 }
 
+// Regular expressions to match streams
+// Valid twitch.tv/username -links, as well as username.tv/live -links work
+var twitchLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?twitch\\.tv/([a-zA-Z0-9]+)[/]?(?: |$)")
+var liveLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?([a-zA-Z0-9]+)\\.tv/live[/]?(?: |$)")
+
 // ----- Data structs for Twitch API ----- //
 
 type User struct {
@@ -93,11 +98,6 @@ type FollowsResponse struct {
 type StreamResponse struct {
 	Stream *Stream `json:"stream"`
 }
-
-// Regular expressions to match streams
-// Valid twitch.tv/username -links, as well as username.tv/live -links work
-var twitchLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?twitch\\.tv/([a-zA-Z0-9]+)(?: |$)")
-var liveLinkRe = regexp.MustCompile("(?:https?://)?(?:www\\.)?([a-zA-Z0-9]+)\\.tv/live(?: |$)")
 
 // Session is declared in the global space so it can be easily used
 // throughout this program.
@@ -264,21 +264,18 @@ func monitor(messageID string, channelID string, streamer string) {
 
 // Handle a message in Discord that the bot received
 func handleMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
-	printMsg(m)
-
 	if m.Author.Bot == true {
 		// Ignore bots
 		return
 	}
 
-	streamer := getStreamerAdvertised(m.Content)
-	log.Printf("Stream from %s mentioned", streamer)
-	if streamer != "" {
-		if !channelOk(m.ChannelID) {
-			return
-		}
+	if !channelOk(m.ChannelID) {
+		return
+	}
 
-		log.Printf("Channel looks like we should monitor it, so will do that")
+	streamer := getStreamerAdvertised(m.Content)
+	if streamer != "" {
+		log.Printf("Stream from %s mentioned, monitoring..", streamer)
 
 		go monitor(m.ID, m.ChannelID, streamer)
 	}
