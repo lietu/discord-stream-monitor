@@ -264,11 +264,6 @@ func monitor(messageID string, channelID string, streamer string) {
 
 // Handle a message in Discord that the bot received
 func handleMessage(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if m.Author.Bot == true {
-		// Ignore bots
-		return
-	}
-
 	if !channelOk(m.ChannelID) {
 		return
 	}
