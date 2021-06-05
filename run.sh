@@ -9,6 +9,9 @@ if [[ -f "$HOME/.profile" ]]; then
     source "$HOME/.profile"
 fi
 
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+cd $SCRIPTPATH
+
 # Configure your tokens
 export DSM_TOKEN="DISCORD_BOT_TOKEN_GOES_HERE"
 export DSM_CLIENT_ID="TWITCH_CLIENT_ID_GOES_HERE"
